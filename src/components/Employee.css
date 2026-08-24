@@ -10,25 +10,41 @@ li{
     margin: 10px;
 }
 
-li :hover{
-    transform: translateX(-3);
+li:hover {
+    transform: translateY(-5px);
     cursor: pointer;
 }
 
-.employee-cards{
+.employee-cards {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
 }
 
-div{
+.dashboard-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
 .pagination{
     display: flex;
     flex-direction: row;
+}
+
+@media screen and (max-width: 768px) {
+    li{
+        width: 100%;
+    }
 }

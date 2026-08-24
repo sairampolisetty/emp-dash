@@ -15,16 +15,20 @@ function EmployeeDashboard() {
   }, [employees]);
 
   useEffect(() => {
-    setLoading(true);
-    fetch("https://dummyjson.com/users")
-      .then((response) => response.json())
-      .then((data) => {
-        setEmployees(data.users);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const savedEmps = localStorage.getItem("emps");
+    if (!savedEmps || JSON.parse(savedEmps).length === 0) {
+      setLoading(true);
+      fetch("https://dummyjson.com/users")
+        .then((response) => response.json())
+        .then((data) => {
+          setEmployees(data.users);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
+    }
   }, []);
 
   const handleDeleteEmployee = (empID) => {
@@ -44,7 +48,7 @@ function EmployeeDashboard() {
   const firstPageId = lastPageId - noOfEmps;
   const currentPageEmps = filteredEmployees.slice(firstPageId, lastPageId);
   const totalPages = Math.ceil(filteredEmployees.length / noOfEmps);
-  console.log(isLoading);
+
   const handleNext = () => {
     if (currentPage < totalPages) setCurrentPage((prevstate) => prevstate + 1);
   };
@@ -54,12 +58,12 @@ function EmployeeDashboard() {
   };
 
   return (
-    <div>
+    <div className="dashboard-container">
       <h1>Employee Dashboard</h1>
       <input value={searchInput} onChange={handleSearch} type="search" />
       <ul className="employee-cards">
         {isLoading ? (
-          <div>
+          <div className="loading-container">
             <h1>Loading....</h1>
           </div>
         ) : (
